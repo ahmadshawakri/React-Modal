@@ -13,7 +13,7 @@
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 90%;
+  width: 80%;
   min-height: 100vh;
 }
 
@@ -24,14 +24,29 @@
   margin-bottom: 32px;
 }
 
-.close {
-  color: #aaaaaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
-.close:hover {
-  color: #000;
+@media (max-width: 768px) {
+  .modalContent {
+    width: 100%;
+  }
+  .modalHeader {
+    h1 {
+      font-size: 20px;
+    }
+  }
+  .icons {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
 }

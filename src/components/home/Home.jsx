@@ -7,15 +7,31 @@ import jsonData from "../../assets/data.json";
 import Modal from "../modal/Modal";
 
 // Styles
-import styles from "./home.module.css";
+import styles from "./home.module.scss";
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickedItem, setClickedItem] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const openModal = (item) => {
     setClickedItem(item);
     setIsModalOpen(true);
+    setCurrentIndex(item.id);
+  };
+
+  const goToNextItem = () => {
+    if (currentIndex < jsonData.length - 1) {
+      setClickedItem(jsonData[currentIndex + 1]);
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const goToPrevItem = () => {
+    if (currentIndex > 0) {
+      setClickedItem(jsonData[currentIndex - 1]);
+      setCurrentIndex(currentIndex - 1);
+    }
   };
 
   const closeModal = () => {
@@ -26,7 +42,9 @@ const Home = () => {
     <div className={styles.wrapper}>
       {jsonData.map((item) => (
         <div
-          className={styles.itemWrapper}
+          className={`${styles.itemWrapper} ${
+            isModalOpen ? styles.heightZero : ""
+          }`}
           key={item.id}
           onClick={() => openModal(item)}
         >
@@ -39,7 +57,12 @@ const Home = () => {
       ))}
 
       {isModalOpen && (
-        <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <Modal
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          nextItem={goToNextItem}
+          prevItem={goToPrevItem}
+        >
           <div className={styles.modalItemWrapper}>
             <img src={clickedItem.url} alt={clickedItem.title} />
             <div>
